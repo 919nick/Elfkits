@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Elf Setup Kits</title>
+  <meta name="description" content="Easy Elf setup kits. Pick your favorites and send an order request by text or email." />
+  <style>
+    :root{
+      --bg:#f6f4ef;--card:#fff;--ink:#201f1d;--muted:#716d67;--accent:#b21f2d;
+      --accent2:#1f6b46;--line:#e6e0d8;--shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-rounded,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:96px}
+    .wrap{max-width:760px;margin:0 auto;padding:16px}
+    .hero{background:linear-gradient(135deg,#fff,#f3eee6);border:1px solid var(--line);border-radius:24px;padding:22px 18px;margin:8px 0 16px;box-shadow:var(--shadow)}
+    .eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2)}
+    h1{font-size:2rem;line-height:1.05;margin:.35rem 0 .5rem}
+    .hero p{margin:0;color:var(--muted);font-size:1rem}
+    .pricing{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+    .pill{font-size:.84rem;font-weight:800;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 10px}
+    .section-title{display:flex;align-items:end;justify-content:space-between;margin:18px 2px 10px}
+    .section-title h2{font-size:1.15rem;margin:0}.section-title span{font-size:.82rem;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.05);position:relative}
+    .image-wrap{aspect-ratio:1/1;background:#eee;position:relative;overflow:hidden}
+    .image-wrap img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;cursor:zoom-in}
+    .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#8f8880;font-size:.82rem;background:linear-gradient(145deg,#f8f5f0,#ece6de)}
+    .card-body{padding:10px}
+    .name{font-weight:850;font-size:.98rem;line-height:1.1;margin-bottom:5px}
+    .desc{color:var(--muted);font-size:.78rem;line-height:1.25;min-height:2.1em}
+    .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:9px;gap:8px}
+    .price{font-weight:900}.premium{font-size:.72rem;color:var(--accent);font-weight:800}
+    button{font:inherit}
+    .add{border:0;border-radius:999px;background:var(--accent2);color:white;font-weight:850;padding:8px 12px;min-width:64px}
+    .add.selected{background:var(--accent);}
+    .bundle-note{margin:14px 0;background:#fff7df;border:1px solid #ead7a4;border-radius:16px;padding:12px;font-size:.9rem;color:#5e4a13}
+    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));}
+    .sticky-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px}
+    .summary{flex:1;min-width:0}.summary strong{display:block}.summary span{display:block;color:var(--muted);font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .review-btn{border:0;background:var(--ink);color:#fff;border-radius:14px;padding:12px 14px;font-weight:850}
+    .sheet{position:fixed;inset:0;z-index:50;display:none}.sheet.open{display:block}.scrim{position:absolute;inset:0;background:rgba(0,0,0,.42)}
+    .panel{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:82vh;overflow:auto}
+    .panel-inner{max-width:760px;margin:0 auto}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.panel h3{margin:0;font-size:1.25rem}
+    .close{border:1px solid var(--line);background:#fff;border-radius:999px;width:38px;height:38px;font-size:1.2rem}
+    .order-list{margin:14px 0 8px;padding:0;list-style:none}.order-list li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+    .totals{padding:12px 0}.row{display:flex;justify-content:space-between;padding:4px 0}.row.total{font-size:1.15rem;font-weight:900;padding-top:10px}
+    .field{margin-top:12px}.field label{display:block;font-size:.8rem;font-weight:800;margin-bottom:5px}.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:#fff}.field textarea{min-height:72px;resize:vertical}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.actions a{text-decoration:none;text-align:center;border-radius:14px;padding:13px 10px;font-weight:900}.sms{background:var(--accent2);color:rgb(0, 216, 47)}.email{background:#01a81d;color:var(--ink)}
+    .hint{font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.35}
+
+    .image-modal{position:fixed;inset:0;z-index:100;display:none;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:20px}
+    .image-modal.open{display:flex}
+    .image-modal img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+    .image-close{position:absolute;top:calc(12px + env(safe-area-inset-top));right:16px;border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;width:44px;height:44px;font-size:2rem;line-height:1;display:flex;align-items:center;justify-content:center}
+    .image-caption{position:absolute;left:20px;right:20px;bottom:calc(14px + env(safe-area-inset-bottom));color:#fff;text-align:center;font-weight:800;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+    .actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.actions a{
+  text-decoration:none;
+  text-align:center;
+  border-radius:14px;
+  padding:13px 10px;
+  font-weight:900;
+}
+
+.email{
+  background:#01a81d;
+  color:var(--ink);
+}
+    @media (min-width:620px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}h1{font-size:2.4rem}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Easy Elf Nights</div>
+      <h1>Pick the setups you want. I’ll handle the tiny stuff.</h1>
+      <p>Handmade and 3D-printed Elf setup kits designed to make December nights easy.</p>
+      <p>Hand painted items may vary slightly in color.</p>
+      <div class="pricing">
+        <span class="pill">$6 each</span><span class="pill">3 for $16</span><span class="pill">6 for $30</span><span class="pill">Complete 12 day kit for $50</span>
+      </div>
+    </section>
+
+    <div class="section-title"><h2>Choose your kits</h2><span>Tap Add to build your order</span></div>
+    <div id="grid" class="grid"></div>
+    <div class="bundle-note" id="bundleNote">Choose any kit to get started.</div>
+  </main>
+
+  <div class="sticky">
+    <div class="sticky-inner">
+      <div class="summary"><strong id="stickyTotal">0 kits · $0</strong><span id="stickySub">No kits selected yet</span></div>
+      <button class="review-btn" id="reviewBtn">Review</button>
+    </div>
+  </div>
+
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <div class="scrim" id="scrim"></div>
+    <section class="panel" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+      <div class="panel-inner">
+        <div class="panel-head"><h3 id="reviewTitle">Your order request</h3><button class="close" id="closeBtn" aria-label="Close">×</button></div>
+        <ul id="orderList" class="order-list"></ul>
+        <div class="totals">
+          <div class="row"><span>Selected</span><strong id="countText">0 kits</strong></div>
+          <div class="row"><span>Bundle pricing</span><strong id="bundleText">—</strong></div>
+          <div class="row total"><span>Estimated total</span><span id="totalText">$0</span></div>
+        </div>
+        <div class="field"><label for="name">Your name</label><input id="name" autocomplete="name" placeholder="Jane Smith"></div>
+        <div class="field"><label for="notes">Notes (optional)</label><textarea id="notes" placeholder="Pickup preference, questions, etc."></textarea></div>
+        <div class="actions"><a class="email" id="emailBtn" href="#">Email Order</a></div>
+        <div class="hint">This does not submit or charge anything on the website. Your phone opens a prefilled text or email for you to review and send.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="image-modal" id="imageModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Full size kit photo">
+    <button class="image-close" id="imageClose" aria-label="Close full size photo">×</button>
+    <img id="modalImage" src="" alt="">
+    <div class="image-caption" id="imageCaption"></div>
+  </div>
+
+<script>
+const SELLER_PHONE = ""; // Add your mobile number, digits only, e.g. 13365551234
+const SELLER_EMAIL = "smithelfkits@gmail.com"; // Add your email address, e.g. orders@example.com
+
+const kits = [
+  {id:1,name:"I'm Back!",price:6,desc:"Arrival setup with suitcase and arrival and leaving sign.  Two day kit.",image:"images/arrive.jpeg"},
+  {id:2,name:"Marshmallow Campfire",price:6,desc:"Campfire scene with roasting stick and marshmallows.",image:"images/campfire.jpeg"},
+  {id:3,name:"Elf Gym",price:6,desc:"Tiny weight bench with separate bar and weights.",image:"images/gym.jpeg"},
+  {id:4,name:"Donut Shop",price:6,desc:"Mini donut shop scene with coffee cup.",image:"images/donuts.jpeg"},
+  {id:5,name:"Snowball Fight",price:6,desc:"Barricade with loose blocks and marshmellow snowballs.",image:"images/snowball.jpeg"},
+  {id:6,name:"Fishing Trip",price:6,desc:"Tiny fishing setup with pole and Goldfish.",image:"images/fishing.jpeg"},
+  {id:7,name:"Movie Night",price:6,desc:"Popcorn and drink cup.",image:"images/movie.jpeg"},
+  {id:8,name:"Superhero Mask",price:6,desc:"Superhero mask",image:"images/batman.jpeg"},
+  {id:9,name:"Elf Gamer",price:6,desc:"VR headset and controllers.",image:"images/vr.jpeg"},
+
+  {id:11,name:"Dumpling",price:6,desc:"Dumpling costume",image:"images/dumpling.jpeg"},
+  {id:12,name:"Needoh",price:10,desc:"Needoh costume in multicolor silk.  Also available in white for the standard price.",image:"images/needoh.jpeg",premium:true}
+];
+
+
+const selected = new Set();
+const grid = document.getElementById('grid');
+
+function cardTemplate(k){
+  return `<article class="card">
+    <div class="image-wrap">
+      <div class="fallback">Add photo:<br><strong>${k.image}</strong></div>
+      <img src="${k.image}" alt="${k.name} Elf setup" data-full-image="${k.image}" data-image-name="${k.name}" onerror="this.style.display='none'">
+    </div>
+    <div class="card-body">
+      <div class="name">${k.name}</div>
+      <div class="desc">${k.desc}</div>
+      <div class="card-foot">
+        <div><div class="price">$${k.price}</div>${k.premium?'<div class="premium">premium item</div>':''}</div>
+        <button class="add" data-id="${k.id}">Add</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+grid.innerHTML = kits.map(cardTemplate).join('');
+
+
+grid.addEventListener('click',e=>{
+  const img=e.target.closest('img[data-full-image]');
+  if(img){openImage(img.dataset.fullImage,img.dataset.imageName);return;}
+  const btn=e.target.closest('.add'); if(!btn) return;
+  const id=Number(btn.dataset.id);
+  if(selected.has(id)){selected.delete(id);btn.classList.remove('selected');btn.textContent='Add';}
+  else{selected.add(id);btn.classList.add('selected');btn.textContent='Added';}
+  render();
+});
+
+
+function openImage(src,name){
+  const modal=document.getElementById('imageModal');
+  const img=document.getElementById('modalImage');
+  img.src=src;
+  img.alt=`${name} Elf setup full-size photo`;
+  document.getElementById('imageCaption').textContent=name;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+}
+function closeImage(){
+  const modal=document.getElementById('imageModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  document.getElementById('modalImage').src='';
+}
+document.getElementById('imageClose').addEventListener('click',closeImage);
+document.getElementById('imageModal').addEventListener('click',e=>{if(e.target.id==='imageModal') closeImage();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeImage();closeSheet();}});
+
+function pricing(){
+  const chosen=kits.filter(k=>selected.has(k.id));
+  const hasPremium=chosen.some(k=>k.premium);
+  const std=chosen.filter(k=>!k.premium).length;
+  const totalCount=chosen.length;
+  if(totalCount===12) return {total:50,label:'All 12 bundle'};
+  // Premium Needoh remains $10 unless all-12 bundle. Standard items use simple bundle tiers.
+  let stdTotal=0, labelParts=[];
+  if(std>=6){stdTotal=30+(std-6)*6;labelParts.push('6 for $30');}
+  else if(std>=3){stdTotal=16+(std-3)*6;labelParts.push('3 for $16');}
+  else {stdTotal=std*6; if(std) labelParts.push('$6 each');}
+  if(hasPremium){stdTotal+=10;labelParts.push('Needoh $10');}
+  return {total:stdTotal,label:labelParts.join(' + ') || '—'};
+}
+
+function nextDealText(){
+  const n=selected.size;
+  if(n===0) return 'Choose any kit to get started.';
+  if(n<3) return `Add ${3-n} more ${3-n===1?'kit':'kits'} to reach 3 for $16.`;
+  if(n<6) return `You unlocked 3 for $16. Add ${6-n} more to reach 6 for $30.`;
+  if(n<12) return `You unlocked 6 for $30. Select all ${12-n} remaining kits for the $50 full set.`;
+  return 'Best value unlocked: all 12 for $50.';
+}
+
+function render(){
+  const p=pricing(); const n=selected.size;
+  document.getElementById('stickyTotal').textContent=`${n} ${n===1?'kit':'kits'} · $${p.total}`;
+  document.getElementById('stickySub').textContent=p.label;
+  document.getElementById('bundleNote').textContent=nextDealText();
+}
+
+function buildMessage(){
+  const chosen=kits.filter(k=>selected.has(k.id));
+  const p=pricing();
+  const name=document.getElementById('name').value.trim();
+  const notes=document.getElementById('notes').value.trim();
+  const lines=["Hi! I'd like to request these Elf kits:",""];
+  chosen.forEach(k=>lines.push(`• ${k.name}`));
+  lines.push('',`Pricing: ${p.label}`,`Estimated total: $${p.total}`);
+  if(name) lines.push('',`Name: ${name}`);
+  if(notes) lines.push(`Notes: ${notes}`);
+  lines.push('',"Please confirm availability and pickup/payment details. Thanks!");
+  return lines.join('\n');
+}
+
+function renderSheet(){
+  const chosen=kits.filter(k=>selected.has(k.id));
+  const p=pricing();
+  document.getElementById('orderList').innerHTML=chosen.length?chosen.map(k=>`<li><span>${k.name}</span><strong>$${k.price}</strong></li>`).join(''):'<li><span>No kits selected.</span><span></span></li>';
+  document.getElementById('countText').textContent=`${chosen.length} ${chosen.length===1?'kit':'kits'}`;
+  document.getElementById('bundleText').textContent=p.label;
+  document.getElementById('totalText').textContent=`$${p.total}`;
+  updateLinks();
+}
+
+function updateLinks(){
+  const msg=buildMessage();
+  const subject='Elf Kit Order Request';
+  // SMS URI handling varies by platform; this form works well on iPhone and many Android devices.
+ // document.getElementById('smsBtn').href = SELLER_PHONE ? `sms:${SELLER_PHONE}?&body=${encodeURIComponent(msg)}` : `sms:?&body=${encodeURIComponent(msg)}`;
+  document.getElementById('emailBtn').href = `mailto:${SELLER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
+}
+
+['name','notes'].forEach(id=>document.getElementById(id).addEventListener('input',updateLinks));
+
+document.getElementById('reviewBtn').addEventListener('click',()=>{renderSheet();document.getElementById('sheet').classList.add('open');document.getElementById('sheet').setAttribute('aria-hidden','false');});
+function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sheet').setAttribute('aria-hidden','true');}
+document.getElementById('closeBtn').addEventListener('click',closeSheet);document.getElementById('scrim').addEventListener('click',closeSheet);
+render();
+</script>
+</body>
+</html>
